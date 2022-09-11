@@ -495,12 +495,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 	
 	\begin{frame}[fragile]
 		\frametitle{The Cox regression model (cont.)}
-		\framesubtitle{Residuals}
-		There are several types of residuals used for checking the model assumptions.
-	\end{frame}
-	
-	\begin{frame}[fragile]
-		\frametitle{The Cox regression model (cont.)}
 		\framesubtitle{An example}
 		\begin{Verbatim}[fontsize=\small]
              exp(coef) exp(-coef) lower .95 upper .95
@@ -514,6 +508,37 @@ Likelihood ratio test= 31.27  on 4 df,   p=3e-06
 Wald test            = 30.61  on 4 df,   p=4e-06
 Score (logrank) test = 31.06  on 4 df,   p=3e-06
 		\end{Verbatim}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{Residuals}
+		There are several types of residuals used for checking the model assumptions.
+		\begin{itemize}
+			\item Cox-Snell residuals:
+			\[ r_{ Ci } = \exp( \hat{ \boldsymbol{ \beta } }'\boldsymbol{ x }_i ) \hat{ H }_0( t_i ), \]
+			where $\hat{ H }_0( t_i )$ is an estimate of the baseline cumulative hazard function at $t_i$. When an appropriate model is fitted, the Cox-Snell residuals follows an exponential distribution with unity mean.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{Residuals}
+		\begin{itemize}
+			\item Martingale residuals:
+			\[ r_{ Mi } = \delta_i - r_{ Ci }, \]
+			where $\delta_i = 0$ when $t_i$ is censored and $\delta_i = 1$ otherwise. Martingale residuals are used for checking the linearity assumption.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{Residuals}
+		\begin{itemize}
+			\item Deviance residuals:
+			\[ r_{ Di } = \text{sgn}( r_{ Mi } )[ -2 \{ r_{ Mi } + \delta_i \log( \delta_i - r_{ Mi } ) \} ] ^ \frac{ 1 }{ 2 }, \]
+			where the function $\text{sgn}( \cdot )$ is the sign function. Deviance residuals are also used for checking linearity assumption.
+		\end{itemize}
 	\end{frame}
 
 	\begin{frame}[allowframebreaks]
