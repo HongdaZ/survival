@@ -169,7 +169,31 @@
 		\end{itemize}
 	\end{frame}
 
-	
+	\begin{frame}
+		\frametitle{Basic concepts (cont.)}
+		\begin{itemize}
+			\item The distribution function: let $T$ be the random variable associated with the survival time. Then the distribution of function of $T$ is then given by 
+			\[ F( t ) = P( T < t ) = \int_{ 0 }^{ t } f( u ) du,  \]
+			which represents the probability of the survival time being less than $t$.
+			\item The survivor function:
+			\[ S(t) = P( T \geq t ) = 1 - F( t ), \]
+			which represents the probability of survival time greater than or equal to $t$.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Basic concepts (cont.)}
+		\begin{itemize}
+			\item The hazard function: 
+			\[ h(t) = \lim_{  \delta \rightarrow 0 }\left\{ \frac{ P( t \leq T < t + \delta | T \geq t ) }{ \delta } \right\}, \]
+			which represents a instantaneous event rate at time $t$. 
+			(Note: $ h( t ) = \frac{ f( t ) }{ S( t ) }$)
+			\item The cumulative hazard function:
+			\[ H( t ) = \int_{ 0 }^{ t } h( u ) du, \]
+			represents the cumulative risk of an event happening by time $t$.
+			(Note: $H( t ) = - \log S( t )$.) 
+		\end{itemize}
+	\end{frame}
 
 	\begin{frame}[allowframebreaks]
 		\begin{singlespace}
