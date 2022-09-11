@@ -194,6 +194,14 @@
 			(Note: $H( t ) = - \log S( t )$.) 
 		\end{itemize}
 	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function}
+		Suppose there are $n$ individuals with the corresponding survival times $t_1, t_2, \dots, t_n$. Let the $r$ distinct survival times be order as $t_{ ( 1 ) } < t_{ ( 2 ) } < \dots < t_{ ( r ) }$. Let $n_j$ denote the number of individuals alive right before $t_{ ( j ) }$ and $d_{ ( j ) }$ denote the number of event (death) at time $t_{ ( j ) }$. Then the Kaplan-Meier estimate of the survivor function is given by
+		\[ \hat{ S }( t ) = \prod_{ j = 1 }^{ k } \frac{ n_j - d_j }{ n_j }, \]
+		for $t_{ ( k ) } \leq t < t_{ ( k + 1 ) }$, with $\hat{ S }( t ) = 1$ for $t < t_{ ( 1 ) }$ and $\hat{ S }( t ) = 0$ for $t \geq t_{ ( r ) }$.
+			
+	\end{frame}
 
 	\begin{frame}[allowframebreaks]
 		\begin{singlespace}
