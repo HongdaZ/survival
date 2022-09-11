@@ -1,9 +1,17 @@
 \frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
-		\framesubtitle{An example}
-		Then run the code below to get and plot the Kaplan-Meier estimate of the survivor function.
-		\begin{Verbatim}[fontsize=\small]
-## Kaplan-Meier estimate
-km <- survfit( Surv( time, status ) ~ 1, data = lung )
+		\framesubtitle{Comparison of two groups of survival data}
+		It's straight forward to compare the estimated survival functions of the two groups.
+	    \begin{Verbatim}[fontsize=\small]
+## Compare the survivor functions of male and female
+km_sex <- survfit( Surv( time, status ) ~ sex, data = lung )
 ## Generate graphs
-ggsurvplot( km_sex )
-		\end{Verbatim}
+ggsurvplot( km_sex,
+            conf.int = TRUE, # add confidence intervals
+            pval = TRUE, # show the p-value for the log-rank test
+            risk.table = TRUE, # show a risk table below the plot
+            legend.labs = c( "Male", "Female" ),
+            legend.title = "Sex",
+            palette = c("dodgerblue4", "orchid2"),
+            title = "Kaplan-Meier Curve for Lung Cancer Survival",
+            risk.table.height = .2 )
+	    \end{Verbatim}

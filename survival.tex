@@ -318,20 +318,104 @@ ggsurvplot( km_sex )
 		The standard error of the percentiles is given by
 		\[ \text{se}\{ \hat{ t }( p ) \} = \frac{ 1 }{ \hat{ f }\{ \hat{ t }( p ) \} } \text{se}[ \hat{ S }\{\hat{ t }( p )\} ], \]
 		where $\hat{ f }\{ \hat{ t }( p ) \}$ is estimated density function at $\hat{ t }( p )$.
-		
 	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
 		\framesubtitle{Estimating the density function}
 		The estimated density function is given by
-		\[ \hat{ f }\{ \hat{ t }( p ) \} = \frac{ \hat{ S }\{\hat{ u }( p )\} - \hat{ S }\{\hat{ l }( p ) \} }{ \hat{ u }( p ) - \hat{ l }( p ) }, \]
+		\[ \hat{ f }\{ \hat{ t }( p ) \} = \frac{ \hat{ S }\{\hat{ u }( p )\} - \hat{ S }\{\hat{ l }( p ) \} }{ \hat{ l }( p ) - \hat{ u }( p ) }, \]
 		where 
 		\[ \hat{ u }( p ) = \max \left\{ t_{ ( j ) } | \hat{ S }( t_{ ( j ) } ) \geq 1 - \frac{ p }{ 100 } + \epsilon )  \right\}, \]
 		and 
 		\[ \hat{ l }( p ) = \max \left\{ t_{ ( j ) } | \hat{ S }( t_{ ( j ) } ) \leq 1 - \frac{ p }{ 100 } - \epsilon )  \right\}, \]
 		for $j = 1, 2, \dots, r$, and small values of $\epsilon$. $\epsilon$ is usually taken as 0.05, however larger value will be required if $\hat{ u }( p ) = \hat{ l }( p )$.
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Comparison of two groups of survival data}
+		It's straight forward to compare the estimated survival functions of the two groups.
+	    \begin{Verbatim}[fontsize=\small]
+## Compare the survivor functions of male and female
+km_sex <- survfit( Surv( time, status ) ~ sex, data = lung )
+## Generate graphs
+ggsurvplot( km_sex,
+            conf.int = TRUE, # add confidence intervals
+            pval = TRUE, # show the p-value for the log-rank test
+            risk.table = TRUE, # show a risk table below the plot
+            legend.labs = c( "Male", "Female" ),
+            legend.title = "Sex",
+            palette = c("dodgerblue4", "orchid2"),
+            title = "Kaplan-Meier Curve for Lung Cancer Survival",
+            risk.table.height = .2 )
+	    \end{Verbatim}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Comparison of two groups of survival data}
 		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=.4]{sex}
+			\caption{The Kaplan-Meier estimate of the survivor function and the confidence limits for male and female.}
+			\label{fig:sex}
+		\end{figure}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{The log-rank test}
+		Non-parametric tests are used for testing the difference in the survivor functions between groups. Let $d_{ 1j }$ and $d_{ 2j }$ denote the number of death at time $t_{ ( j ) }$ in group 1 and 2, respectively. Let $n_{ 1j }$ and $n_{ 2j }$ denote the number of individuals at risk right before time $t_{ ( j ) }$ in group 1 and 2, respectively. Let $d_j = d_{ 1j } + d_{ 2j }$ and $n_j = n_{ 1j } + n_{ 2j }$.
+		\begin{tabular}{cccc}
+			\hline\hline
+			Group & Number of  & Number of & Number at risk right \\
+		
+			& deaths at $t_{ ( j ) }$ & surviving over $t_{ ( j ) }$ & before $t_{ ( j ) }$ \\
+			\hline
+			1 & $d_{ 1j }$ & $n_{ 1j } - d_{ 1j }$ & $n_{ 1j }$ \\
+			2  & $d_{ 2j }$ & $n_{ 2j } - d_{ 2j }$ & $n_{ 2j }$ \\
+			\hline
+			Total & $d_{ j }$ & $n_j - d_j$  & $n_j$ \\
+			\hline\hline
+		\end{tabular}
+	Suppose the marginal totals in the table are fixed, then the four entries in the table is determined by the value of $d_{ 1j }$. If the survival is independent from group, then
+	\[ d_{ 1j } \sim \text{Hypergeometric}( n_j, d_j, n_{ 1j } ).\]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{The log-rank test}
+		The mean of $d_{ 1j }$ is given by
+		\[ e_{ 1j } = n_{ 1j } d_j / n_j. \]
+		The variance of it is given by
+		\[ v_{ 1j } = \frac{ n_{ 1j } n_{ 2j } d_j( n_j - d_j ) }{ n_j^2( n_j - 1 ) }.\]
+		Let 
+		\[ U_L = \sum_{ j = 1 }^{ r }( d_{ 1j } - e_{ 1j } ). \]
+		Then 
+		\[ \text{var}( U_L ) = \sum_{ j = 1 }^{ r } v_{ 1j } = V_L, \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{The log-rank test}
+		It can be shown that 
+		\[ \frac{ U_L }{ \sqrt{ V_L } } \sim N( 0, 1 ). \]
+		Consequently,
+		\[ \frac{ U_L^2 }{ V_L } \sim \chi_1^2. \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{The Wilcoxon test}
+		If a weight $n_j$ is put on each $d_{ 1j } - e_{ 1j }$, then
+		\[ U_W = \sum_{ j = 1 }^{ r } n_j( d_{ 1j } - e_{ 1j } ). \]
+		The variance of $U_W$ is give by
+		\[ V_W = \sum_{ j = 1 }^{ r } n_j^2 v_{ 1j } \]
+		The Wilcoxon test statistic is 
+		\[ W_W = U_W^2 / V_W, \]
+		which follows $\chi^2_1$ when the null hypothesis is true.
 	\end{frame}
 		
 	\begin{frame}[allowframebreaks]
