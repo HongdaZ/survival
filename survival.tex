@@ -268,7 +268,72 @@ meal.cal:  Calories consumed at meals
 wt.loss:   Weight loss in last six months (pounds)
 		\end{Verbatim}
 	\end{frame}
-
+	\begin{frame}[fragile]
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{An example}
+		Then run the code below to get and plot the Kaplan-Meier estimate of the survivor function. 
+		\begin{Verbatim}[fontsize=\small]
+## Kaplan-Meier estimate 
+km <- survfit( Surv( time, status ) ~ 1, data = lung )
+## Generate graphs
+ggsurvplot( km_sex )
+		\end{Verbatim}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{An example}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=.33]{km_curve}
+			\caption{The Kaplan-Meier estimate of the survivor function and the confidence limits.}
+			\label{fig:km}
+		\end{figure}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Hazard function}
+		It's natural to estimate the hazard function as the death rate at a given time $t$ divided by the length of the time interval. Then the hazard function from $t_{ ( j ) }$ to $t_{ ( j + 1 ) }$ is estimated by 
+		\[ \hat{ h }( t ) = \frac{ d_j }{ n_j \tau_j }, \]
+		for $t_{ ( j ) } \leq t < t_{ ( j + 1 ) }$, where $\tau_j = t_{ ( j + 1 ) } - t_{ ( j ) }$.
+		The estimated standard error is given by
+		\[ \text{se}\{ \hat{ h }( t ) \} = \hat{ h }( t )\sqrt{ \frac{ n_j - d_j }{ n_j d_j } }. \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Cumulative hazard function}
+		Since $H( t ) = - \log S( t )$, the estimated cumulative hazard function is given by
+		\[ \hat{ H }( t ) = - \sum_{ j = 1 }^{ k } \log \left( \frac{ n_j - d_j }{ n_j } \right). \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Estimating the percentile}
+		The estimated percentile is given by
+		\[ \hat{ t }( p ) = \min\{ t_i | \hat{ S }( t_i ) < \frac{ p }{ 100 } \}, \]
+		where $t_i$ is the observed survival time for the $i$th individual.
+		The standard error of the percentiles is given by
+		\[ \text{se}\{ \hat{ t }( p ) \} = \frac{ 1 }{ \hat{ f }\{ \hat{ t }( p ) \} } \text{se}[ \hat{ S }\{\hat{ t }( p )\} ], \]
+		where $\hat{ f }\{ \hat{ t }( p ) \}$ is estimated density function at $\hat{ t }( p )$.
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Estimating the density function}
+		The estimated density function is given by
+		\[ \hat{ f }\{ \hat{ t }( p ) \} = \frac{ \hat{ S }\{\hat{ u }( p )\} - \hat{ S }\{\hat{ l }( p ) \} }{ \hat{ u }( p ) - \hat{ l }( p ) }, \]
+		where 
+		\[ \hat{ u }( p ) = \max \left\{ t_{ ( j ) } | \hat{ S }( t_{ ( j ) } ) \geq 1 - \frac{ p }{ 100 } + \epsilon )  \right\}, \]
+		and 
+		\[ \hat{ l }( p ) = \max \left\{ t_{ ( j ) } | \hat{ S }( t_{ ( j ) } ) \leq 1 - \frac{ p }{ 100 } - \epsilon )  \right\}, \]
+		for $j = 1, 2, \dots, r$, and small values of $\epsilon$. $\epsilon$ is usually taken as 0.05, however larger value will be required if $\hat{ u }( p ) = \hat{ l }( p )$.
+		
+	\end{frame}
+		
 	\begin{frame}[allowframebreaks]
 		\begin{singlespace}
 			\interlinepenalty=10000	% prevents bib items from splitting across pages
