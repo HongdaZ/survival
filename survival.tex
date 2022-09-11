@@ -438,6 +438,84 @@ ggsurvplot( km_sex,
 		\end{itemize}
 	\end{frame}
 	
+	\begin{frame}
+		\frametitle{The Cox regression model (cont.)}
+		\begin{itemize}
+			\item Let $x_{ 1i }, x_{ 2i }, \dots, x_{ pi }$ be the values of the $p$ explanatory variables of the $i$th individual and $\beta_1, \beta_2, \dots, \beta_p$ be the $p$ coefficients. Then the model equation can be written as
+			\[ h_i( t ) = \exp( \beta_1 x_{ 1i } + \beta_2 x_{ 2i } + \dots + \beta_p x_{ pi } ) h_0( t ) ,\]
+			or
+			\[ \log \left\{ \frac{ h_i( t ) }{ h_0( t ) } \right\} = \beta_1 x_{ 1i } + \beta_2 x_{ 2i } + \dots + \beta_p x_{ pi }. \]
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{Fitting the Cox regression model}
+		The partial likelihood function is given by 
+		\[ L( \boldsymbol{ \beta } ) = \prod_{ j = 1 }^{ r } \frac{ \exp( \boldsymbol{ \beta }'\boldsymbol{ x }_{ ( j ) } ) }{ \sum_{ l \in R( t_{ ( j ) } ) } \exp ( \boldsymbol{ \beta }'\boldsymbol{ x }_l ) }, \]
+		where $\boldsymbol{ \beta }$ is the vector of coefficients, $\boldsymbol{ x }_{ ( j ) }$ is the vector of covariates for the individual who dies at time $t_{ ( j ) }$ and $R( t_{ ( j ) } )$ is the set of individuals at risk at $t_{ ( j ) }$.
+		
+		The Newton-Raphson procedure is used for maximizing the $\log$ transformed partial likelihood function.
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{An example}
+		Now run the code below to get the estimated coefficients
+		\begin{Verbatim}
+## Cox regression model
+cox <- coxph( Surv( time, status ) ~ 
+                factor( sex ) + age + ph.ecog + ph.karno,
+              data = lung )
+summary( cox )
+		\end{Verbatim}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{An example}
+		Then the outputs are shown below.
+		\begin{Verbatim}[fontsize=\small]
+Call:
+coxph(formula = Surv(time, status) ~ factor(sex) + age + ph.ecog + 
+ph.karno, data = lung)
+
+n= 226, number of events= 163 
+(2 observations deleted due to missingness)
+
+                  coef exp(coef)  se(coef)      z Pr(>|z|)    
+factor(sex)2 -0.572802  0.563943  0.169222 -3.385 0.000712 ***
+age           0.012868  1.012951  0.009404  1.368 0.171226    
+ph.ecog       0.633077  1.883397  0.176034  3.596 0.000323 ***
+ph.karno      0.012558  1.012637  0.009514  1.320 0.186842    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+		\end{Verbatim}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{Residuals}
+		There are several types of residuals used for checking the model assumptions.
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{An example}
+		\begin{Verbatim}[fontsize=\small]
+             exp(coef) exp(-coef) lower .95 upper .95
+factor(sex)2    0.5639     1.7732    0.4048    0.7857
+age             1.0130     0.9872    0.9945    1.0318
+ph.ecog         1.8834     0.5310    1.3338    2.6594
+ph.karno        1.0126     0.9875    0.9939    1.0317
+
+Concordance= 0.632  (se = 0.025 )
+Likelihood ratio test= 31.27  on 4 df,   p=3e-06
+Wald test            = 30.61  on 4 df,   p=4e-06
+Score (logrank) test = 31.06  on 4 df,   p=3e-06
+		\end{Verbatim}
+	\end{frame}
+
 	\begin{frame}[allowframebreaks]
 		\begin{singlespace}
 			\interlinepenalty=10000	% prevents bib items from splitting across pages

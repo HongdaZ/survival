@@ -1,17 +1,14 @@
-\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
-		\framesubtitle{Comparison of two groups of survival data}
-		It's straight forward to compare the estimated survival functions of the two groups.
-	    \begin{Verbatim}[fontsize=\small]
-## Compare the survivor functions of male and female
-km_sex <- survfit( Surv( time, status ) ~ sex, data = lung )
-## Generate graphs
-ggsurvplot( km_sex,
-            conf.int = TRUE, # add confidence intervals
-            pval = TRUE, # show the p-value for the log-rank test
-            risk.table = TRUE, # show a risk table below the plot
-            legend.labs = c( "Male", "Female" ),
-            legend.title = "Sex",
-            palette = c("dodgerblue4", "orchid2"),
-            title = "Kaplan-Meier Curve for Lung Cancer Survival",
-            risk.table.height = .2 )
-	    \end{Verbatim}
+\frametitle{The Cox regression model (cont.)}
+		\framesubtitle{An example}
+		\begin{Verbatim}[fontsize=\small]
+             exp(coef) exp(-coef) lower .95 upper .95
+factor(sex)2    0.5639     1.7732    0.4048    0.7857
+age             1.0130     0.9872    0.9945    1.0318
+ph.ecog         1.8834     0.5310    1.3338    2.6594
+ph.karno        1.0126     0.9875    0.9939    1.0317
+
+Concordance= 0.632  (se = 0.025 )
+Likelihood ratio test= 31.27  on 4 df,   p=3e-06
+Wald test            = 30.61  on 4 df,   p=4e-06
+Score (logrank) test = 31.06  on 4 df,   p=3e-06
+		\end{Verbatim}
