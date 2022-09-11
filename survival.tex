@@ -426,6 +426,18 @@ ggsurvplot( km_sex,
 		If the hazard functions are proportional, then the survivor function don't cross one another.
 	\end{frame}
 	
+	\begin{frame}
+		\frametitle{The Cox regression model}
+		Non-parametric methods are useful for analyzing single sample survival data or comparing the survivor functions of two or more groups. However, more factors including quantitative variables may associate with the survival times which gives rise to the parametric methods.
+		\begin{itemize}
+			\item Proportional hazard assumption:
+			there is a baseline hazard function such that the hazard function of each individual is constant (with respect to time $t$) times the baseline hazard function.
+			Then the hazard function of the $i$th individual is given by
+			\[ h_i( t ) = \psi( \boldsymbol{ x }_i )h_0( t ), \]
+			where $\boldsymbol{ x }_i$ is the vector of values of explanatory variables of the $i$th individual, $h_0( t )$ is the baseline hazard function, and $\psi( \cdot )$ is a function of $\boldsymbol{ x }_i$.  
+		\end{itemize}
+	\end{frame}
+	
 	\begin{frame}[allowframebreaks]
 		\begin{singlespace}
 			\interlinepenalty=10000	% prevents bib items from splitting across pages
