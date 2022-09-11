@@ -1,0 +1,14 @@
+\frametitle{The Cox regression model (cont.)}
+		Then check the proportional hazards assumption.
+\begin{Verbatim}
+> ## Check the proportional hazards assumption
+> check.ph <- cox.zph( cox )
+> check.ph
+             chisq df    p
+factor(sex) 1.7133  1 0.19
+age         0.0668  1 0.80
+ph.ecog     1.6902  1 0.19
+ph.karno    5.4535  1 0.02
+GLOBAL      7.3678  4 0.12
+\end{Verbatim}
+		

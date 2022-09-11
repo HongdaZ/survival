@@ -1,0 +1,181 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+	
+	% The Beamer class comes with a number of default slide themes
+	% which change the colors and layouts of slides. Below this is a list
+	% of all the themes, uncomment each in turn to see what they look like.
+	
+	%\usetheme{default}
+	%\usetheme{AnnArbor}
+	%\usetheme{Antibes}
+	%\usetheme{Bergen}
+	%\usetheme{Berkeley}
+	%\usetheme{Berlin}
+	%\usetheme{Boadilla}
+	%\usetheme{CambridgeUS}
+	%\usetheme{Copenhagen}
+	%\usetheme{Darmstadt}
+	%\usetheme{Dresden}
+	%\usetheme{Frankfurt}
+	%\usetheme{Goettingen}
+	%\usetheme{Hannover}
+	%\usetheme{Ilmenau}
+	%\usetheme{JuanLesPins}
+	%\usetheme{Luebeck}
+	\usetheme{Madrid}
+	%\usetheme{Malmoe}
+	%\usetheme{Marburg}
+	%\usetheme{Montpellier}
+	%\usetheme{PaloAlto}
+	%\usetheme{Pittsburgh}
+	%\usetheme{Rochester}
+	%\usetheme{Singapore}
+	%\usetheme{Szeged}
+	%\usetheme{Warsaw}
+	
+	% As well as themes, the Beamer class has a number of color themes
+	% for any slide theme. Uncomment each of these in turn to see how it
+	% changes the colors of your current slide theme.
+	
+	%\usecolortheme{albatross}
+	%\usecolortheme{beaver}
+	%\usecolortheme{beetle}
+	%\usecolortheme{crane}
+	%\usecolortheme{dolphin}
+	%\usecolortheme{dove}
+	%\usecolortheme{fly}
+	%\usecolortheme{lily}
+	%\usecolortheme{orchid}
+	%\usecolortheme{rose}
+	%\usecolortheme{seagull}
+	%\usecolortheme{seahorse}
+	%\usecolortheme{whale}
+	%\usecolortheme{wolverine}
+	
+	%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+	%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+	
+	%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables 
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setbeamertemplate{caption}[numbered]
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\p}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage[toc,page]{appendix}
+\usepackage{epstopdf}
+\usepackage{latexsym}
+\usepackage{amstext}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{float}
+%\usepackage{hyperref} give reference hyperlink 
+%\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{mathtools}
+% packages from template
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage[width=.9\textwidth]{caption}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
+\usepackage{textgreek}
+\usepackage{bbold}
+\usepackage{subcaption}
+\usepackage{natbib}
+\usepackage{verbatim}
+\usepackage{soul}
+\usepackage[utf8]{inputenc}
+\usepackage[algo2e,ruled,vlined]{algorithm2e} 
+\usepackage{fancyvrb}
+
+
+\newtheorem{proposition}[theorem]{Proposition}
+
+\newcommand{\M}{\mathbf{M}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\rep}{\mathrm{rep}}
+\newcommand{\PR}{\text{Pr}}
+\newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
+%\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
+\allowdisplaybreaks
+%=============================================================================
+% prelude
+%=============================================================================
+\def\mathLarge#1{\mbox{\LARGE $#1$}}
+\usepackage{soul}
+
+
+\title[]{A Brief Introduction to Multivariate Linear Regression Models}
+\author[Hongda Zhang]{Hongda Zhang}
+\institute{Nanjing University}
+\date{\today}
+
+
+
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Contents}
+		\begin{enumerate}
+			\item Basic concepts
+			\item Kaplan-Meier estimate
+			\item Cox regression model
+		\end{enumerate}
+	\nocite{*}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Basic concepts}
+		Survival analysis is a set of statistical methods used to deal with time-to-event problems.
+		\begin{itemize}
+			\item Survival time (denoted by $t$): the length of time from a starting point to the occurrence of some event of interest. 
+			\item Censoring: a survival time is censored if the end-point is not observed. Censored survival time is denoted by $c$.
+				\begin{itemize}
+					\item right censoring: the actual survival time is greater than that observed.\\
+					\item left censoring: the actual survival time is less than that observed.\\
+					\item interval censoring: the event happened within an interval.
+				\end{itemize}
+			\item Independent censoring: the actual survival time is independent from the cause of censoring. Many of the survival analysis methods are not valid without this assumption.
+		\end{itemize}
+	\end{frame}
+
+	
+
+	\begin{frame}[allowframebreaks]
+		\begin{singlespace}
+			\interlinepenalty=10000	% prevents bib items from splitting across pages
+			\bibliography{survival}
+			\bibliographystyle{apalike}
+		\end{singlespace}
+	\end{frame}
+\end{document}
