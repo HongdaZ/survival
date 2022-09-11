@@ -205,7 +205,36 @@
 	
 	\begin{frame}
 		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
-		\subtitle{Standard error of the estimated survivor function}
+		\framesubtitle{Standard error of the estimated survivor function}
+		The Kaplan-Meier estimate of the survivor function can be rewritten as 
+		\[ \hat{ S }( t ) = \prod_{ j = 1 }^{ k } \hat{ p }_j, \]
+		for $t_{ ( k ) } \leq t < t_{ ( k + 1 ) }$, $k = 1, 2, \dots, r$, where $\hat{ p } = \frac{ n_j - d_j }{ n_j }$.
+		\begin{align*}
+			\log \hat{ S }( t ) & = \sum_{ j = 1 }^{ k } \log \hat{ p }_j \\
+			\text{var}\left\{ \log \hat{ S }( t ) \right\} & = \sum_{ j = 1 }^{ k } \text{var} \{ \log \hat{ p }_j \}
+		\end{align*}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Standard error of the estimated survivor function}
+		It can be shown that 
+		\[ \text{se}\left\{ \hat{ S }( t ) \right\} \approx \hat{ S }( t ) \left\{ \sum_{ j = 1 }^{ k } \frac{ d_j }{ n_j ( n_j - d_j ) }  \right\} ^ \frac{ 1 }{ 2 }, \]
+		for $t_{ ( k ) } \leq t < t_{ ( k + 1 ) }$.
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{Confidence intervals for the values of survivor function}
+		With the assumption that the estimated value of the survivor function at $t$ is normally distributed with mean $S( t )$ and estimated standard error $\text{se}\left\{ \hat{ S }( t ) \right\}$, then a $100( 1 - \alpha)\%$ confidence interval for $S( t )$ is given by
+		\[ \left( \hat{ S }( t ) - z_{ \alpha / 2 } \text{se}\left\{ \hat{ S }( t ) \right\}, \hat{ S }( t ) + z_{ \alpha / 2 } \text{se}\left\{ \hat{ S }( t ) \right\} \right), \]
+		where $z_{ \alpha / 2 }$ is the $( 1 - \alpha / 2 )$th percentile of standard normal distribution.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Kaplan-Meier estimate of the survivor function (cont.)}
+		\framesubtitle{An example}
+		Now use the lung cancer data in \texttt{survival} package of R as an example.
 	\end{frame}
 
 	\begin{frame}[allowframebreaks]
