@@ -276,7 +276,7 @@ wt.loss:   Weight loss in last six months (pounds)
 ## Kaplan-Meier estimate 
 km <- survfit( Surv( time, status ) ~ 1, data = lung )
 ## Generate graphs
-ggsurvplot( km_sex )
+ggsurvplot( km )
 		\end{Verbatim}
 	\end{frame}
 	
@@ -582,22 +582,6 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 	
 	\begin{frame}
 		\frametitle{Multivariate multiple regression (cont.)}
-		\[ \underset{ n \times m }{ \pmb{ Y } } = \begin{bmatrix}
-			Y_{ 11 } & Y_{ 12 } & \dots & Y_{ 1m } \\
-			Y_{ 21 } & Y_{ 22 } & \dots & Y_{ 2m } \\
-			\vdots   & \vdots  & \ddots & \vdots \\
-			Y_{ n1 } & Y_{ n2} & \dots & Y_{ nm } \\
-		\end{bmatrix} = [ \pmb{Y}_{ ( 1 ) }, \pmb{Y}_{ ( 2 ) }, \dots, \pmb{Y}_{ ( m ) } ]\]
-		\[ \underset{ ( r + 1 ) \times m }{ \pmb{ \beta } } = \begin{bmatrix}
-			\beta_{ 01 } & \beta_{ 02 } & \dots & \beta_{ 0m } \\
-			\beta_{ 11 } & \beta_{ 12 } & \dots & \beta_{ 1m } \\
-			\vdots   & \vdots  & \ddots & \vdots \\
-			\beta_{ r1 } & \beta_{ r2 } & \dots & \beta_{ rm } \\
-		\end{bmatrix} = [ \pmb{ \beta }_{ ( 1 ) }, \pmb{ \beta }_{ ( 2 ) }, \dots, \pmb{ \beta }_{ ( m ) } ] \]
-	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Multivariate multiple regression (cont.)}
 		\[ \underset{ n \times m }{ \pmb{ \epsilon } } = \begin{bmatrix}
 			\epsilon_{ 11 } & \epsilon_{ 12 } & \dots & \epsilon_{ 1m } \\
 			\epsilon_{ 21 } & \epsilon_{ 22 } & \dots & \epsilon_{ 2m } \\
@@ -637,7 +621,7 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 	\begin{frame}
 		\frametitle{Multivariate multiple regression (cont.)}
 		The maximum likelihood estimator of $\pmb{ \Sigma }$ is given by
-		\[ \hat{\pmb{ \Sigma }} = \frac{ 1 }{ n } \hat{ \pmb{ \epsilon } }' \pmb{ \epsilon }. \]
+		\[ \hat{\pmb{ \Sigma }} = \frac{ 1 }{ n } \hat{ \pmb{ \epsilon } }' \hat{\pmb{ \epsilon }}. \]
 		Suppose $\pmb{ z }_{ 0 }$ is from a new trial then 
 		\[ \hat{ \pmb{ \beta } }' \pmb{ z }_0 \sim N_m( \pmb{ \beta }' z_0, z'_0( \pmb{ Z }'\pmb{ Z } )^ { -1 } \pmb{ z }_0 \pmb{ \Sigma } ), \]
 		and 
@@ -654,7 +638,7 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 			& \leq \pmb{ z }_0'( \pmb{ Z }' \pmb{ Z } ) ^ { -1 } \pmb{ z }_0 \left[ \frac{ m( n - r - 1 ) }{ n - r - m } F_{ m, n - r - m }( \alpha ) \right],
 		\end{split}
 		\end{equation*}
-		where $F_{ m, n - r - m }( \alpha )$ is the upper $(100\alpha)$th percentile  o fan $F-$distribution with $m$ and $n - r - m$ d.f.
+		where $F_{ m, n - r - m }( \alpha )$ is the upper $(100\alpha)$th percentile of an $F-$distribution with $m$ and $n - r - m$ d.f.
 	\end{frame}
 	
 	\begin{frame}
