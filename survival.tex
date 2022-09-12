@@ -646,13 +646,26 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 	
 	\begin{frame}
 		\frametitle{Multivariate multiple regression (cont.)}
-		\framesubtitle{Confidence ellipsoid and simultaneous confidence intervals}
-		The maximum likelihood estimator of $\pmb{ \Sigma }$ is given by
-		\[ \hat{\pmb{ \Sigma }} = \frac{ 1 }{ n } \hat{ \pmb{ \epsilon } }' \pmb{ \epsilon }. \]
-		Suppose $\pmb{ z }_{ 0 }$ is from a new trial then 
-		\[ \hat{ \pmb{ \beta } }' \pmb{ z }_0 \sim N_m( \pmb{ \beta }' z_0, z'_0( \pmb{ Z }'\pmb{ Z } )^ { -1 } \pmb{ z }_0 \pmb{ \Sigma } ), \]
-		and 
-		\[ n \hat{ \pmb{ \Sigma } } \sim W_{ n - r - 1 }( \pmb{ \Sigma } ). \]
+		\framesubtitle{Confidence ellipsoid}
+		The $100( 1 - \alpha )\%$ confidence ellipsoid for $\pmb{ \beta }'\pmb{ z }_0$ is given by
+		\begin{equation*}
+		\begin{split}
+			( \pmb{ \beta }'\pmb{z}_0 - \hat{\pmb{ \beta }}'\pmb{z}_0 )' & \left( \frac{ n }{ n - r - 1 } \hat{ \pmb{ \Sigma } } \right) ^ { -1 } ( \pmb{ \beta }'\pmb{z}_0 - \hat{\pmb{ \beta }}'\pmb{z}_0 ) \\
+			& \leq \pmb{ z }_0'( \pmb{ Z }' \pmb{ Z } ) ^ { -1 } \pmb{ z }_0 \left[ \frac{ m( n - r - 1 ) }{ n - r - m } F_{ m, n - r - m }( \alpha ) \right],
+		\end{split}
+		\end{equation*}
+		where $F_{ m, n - r - m }( \alpha )$ is the upper $(100\alpha)$th percentile  o fan $F-$distribution with $m$ and $n - r - m$ d.f.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		\framesubtitle{Simultaneous confidence intervals}
+		The $100( 1 - \alpha )\%$ simultaneous confidence interval s for $E( Y_i ) = \pmb{z}_0' \pmb{ \beta }_{ ( i ) }$ are 
+		\begin{equation*}
+			\pmb{ z }_0' \hat{ \pmb{ \beta } }_{ ( i ) } \pm \sqrt{ \left( \frac{ m( n - r - 1 ) }{ n - r - m } \right) F_{ m, n - r - m }( \alpha ) } \sqrt{ \pmb{ z }_0'( \pmb{ Z }' \pmb{ Z } ) ^ { -1 } \pmb{ z }_0 \left( \frac{ n }{ n - r - 1 } \hat{ \sigma }_{ ii } \right) },
+		\end{equation*}
+		for $i = 1, 2, \dots, m$, where $\hat{ \pmb{ \beta }_{ ( i ) } }$ is the $i$th column of $\hat{ \pmb{ \beta } }$ and $\hat{ \sigma }_{ ii }$ is the $i$th diagonal element of $\pmb{ \Sigma }$.
+		
 	\end{frame}
 
 	\begin{frame}[allowframebreaks]
