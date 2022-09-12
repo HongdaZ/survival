@@ -610,7 +610,49 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 		\pmb{ \epsilon_n'}
 	\end{bmatrix} \]
 	The multivariate linear regression model is 
-	\[ \underset{ n \times m }{ \pmb{ Y } } = \underset{ n \times ( r + 1 ) }{ \pmb{ Z } } \underset{ ( r + 1 ) \times m }{ \pmb{ \beta } } + \underset{ n \times m }{ \pmb{ \epsilon } } \]
+	\[ \underset{ n \times m }{ \pmb{ Y } } = \underset{ n \times ( r + 1 ) }{ \pmb{ Z } } \underset{ ( r + 1 ) \times m }{ \pmb{ \beta } } + \underset{ n \times m }{ \pmb{ \epsilon } }, \]
+	with $E( \pmb{ \epsilon }_{ ( i ) } ) = \pmb{ 0 }$ and $\text{cov}( \epsilon_{ ( i ) }, \epsilon_{ ( k ) } ) = \sigma_{ ik } \pmb{ I }$ for $i, k = 1, 2, \dots, m$. 
+	
+	The $m$ observations on the $j$th trial are correlated with covariance matrix $\pmb{ \Sigma } = \{ \sigma_{ ik } \}$, however observations from different trials are independent.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		\framesubtitle{Least square estimates}
+		Let $\pmb{ B } = [ \pmb{ b }_{ ( 1 ) }, \pmb{ b }_{ ( 2 ) }, \dots, \pmb{ b }_{ ( m ) } ]$ be any choice of the model parameters, then the matrix of errors is $\pmb{ Y } - \pmb{ ZB }$.
+		
+		The generalized variance is defined as $| ( \pmb{ Y } - \pmb{ ZB } )'( \pmb{ Y } - \pmb{ ZB } ) |$ and minimized by 
+		\[ \pmb{ B } = \hat{\pmb{ \beta }} = ( \pmb{ Z }'\pmb{ Z } ) ^ { -1 } \pmb{ Z }'\pmb{ Y }, \]
+		or 
+		\[ \hat{\pmb{ \beta }} = [ \pmb{ \beta }_{ ( 1 ) }, \pmb{ \beta }_{ ( 2 ) }, \dots, \pmb{ \beta }_{ ( m ) } ] = ( \pmb{ Z }'\pmb{ Z } ) ^ { -1 }\pmb{ Z }' [ \pmb{ Y }_{ ( 1 ) }, \pmb{ Y }_{ ( 2 ) }, \dots, \pmb{ Y }_{ ( m ) } ]\].
+		
+		Then the predicted values and residuals can be found.
+		\begin{itemize}
+			\item Predicted values: 
+			\[ \hat{ \pmb{Y} } = \pmb{ Z } \hat{ \pmb{ \beta } } = \pmb{ Z } ( \pmb{Z}' \pmb{Z} ) ^ { -1 } \pmb{ Z }' \pmb{ Y } \]
+			\item Residuals: \[ \hat{ \pmb{ \epsilon } } = \pmb{ Y } - \hat{ \pmb{ Y } } = [ \pmb{ I } - \pmb{ Z }( \pmb{ Z }'\pmb{ Z } ) ^ { -1 } \pmb{ Z }' ] \pmb{ Y } \]
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		The maximum likelihood estimator of $\pmb{ \Sigma }$ is given by
+		\[ \hat{\pmb{ \Sigma }} = \frac{ 1 }{ n } \hat{ \pmb{ \epsilon } }' \pmb{ \epsilon }. \]
+		Suppose $\pmb{ z }_{ 0 }$ is from a new trial then 
+		\[ \hat{ \pmb{ \beta } }' \pmb{ z }_0 \sim N_m( \pmb{ \beta }' z_0, z'_0( \pmb{ Z }'\pmb{ Z } )^ { -1 } \pmb{ z }_0 \pmb{ \Sigma } ), \]
+		and 
+		\[ n \hat{ \pmb{ \Sigma } } \sim W_{ n - r - 1 }( \pmb{ \Sigma } ). \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		\framesubtitle{Confidence ellipsoid and simultaneous confidence intervals}
+		The maximum likelihood estimator of $\pmb{ \Sigma }$ is given by
+		\[ \hat{\pmb{ \Sigma }} = \frac{ 1 }{ n } \hat{ \pmb{ \epsilon } }' \pmb{ \epsilon }. \]
+		Suppose $\pmb{ z }_{ 0 }$ is from a new trial then 
+		\[ \hat{ \pmb{ \beta } }' \pmb{ z }_0 \sim N_m( \pmb{ \beta }' z_0, z'_0( \pmb{ Z }'\pmb{ Z } )^ { -1 } \pmb{ z }_0 \pmb{ \Sigma } ), \]
+		and 
+		\[ n \hat{ \pmb{ \Sigma } } \sim W_{ n - r - 1 }( \pmb{ \Sigma } ). \]
 	\end{frame}
 
 	\begin{frame}[allowframebreaks]
