@@ -119,7 +119,7 @@
 \newcommand{\PR}{\text{Pr}}
 \newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
 %\newcommand\norm[1]{\left\lVert#1\right\rVert}
-\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\bs}[1]{\pmb{#1}}
 \newcommand{\mb}[1]{\mathbf{#1}}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
@@ -433,8 +433,8 @@ ggsurvplot( km_sex,
 			\item Proportional hazard assumption:
 			there is a baseline hazard function such that the hazard function of each individual is constant (with respect to time $t$) times the baseline hazard function.
 			Then the hazard function of the $i$th individual is given by
-			\[ h_i( t ) = \psi( \boldsymbol{ x }_i )h_0( t ), \]
-			where $\boldsymbol{ x }_i$ is the vector of values of explanatory variables of the $i$th individual, $h_0( t )$ is the baseline hazard function, and $\psi( \cdot )$ is a function of $\boldsymbol{ x }_i$.  
+			\[ h_i( t ) = \psi( \pmb{ x }_i )h_0( t ), \]
+			where $\pmb{ x }_i$ is the vector of values of explanatory variables of the $i$th individual, $h_0( t )$ is the baseline hazard function, and $\psi( \cdot )$ is a function of $\pmb{ x }_i$.  
 		\end{itemize}
 	\end{frame}
 	
@@ -452,8 +452,8 @@ ggsurvplot( km_sex,
 		\frametitle{The Cox regression model (cont.)}
 		\framesubtitle{Fitting the Cox regression model}
 		The partial likelihood function is given by 
-		\[ L( \boldsymbol{ \beta } ) = \prod_{ j = 1 }^{ r } \frac{ \exp( \boldsymbol{ \beta }'\boldsymbol{ x }_{ ( j ) } ) }{ \sum_{ l \in R( t_{ ( j ) } ) } \exp ( \boldsymbol{ \beta }'\boldsymbol{ x }_l ) }, \]
-		where $\boldsymbol{ \beta }$ is the vector of coefficients, $\boldsymbol{ x }_{ ( j ) }$ is the vector of covariates for the individual who dies at time $t_{ ( j ) }$ and $R( t_{ ( j ) } )$ is the set of individuals at risk at $t_{ ( j ) }$.
+		\[ L( \pmb{ \beta } ) = \prod_{ j = 1 }^{ r } \frac{ \exp( \pmb{ \beta }'\pmb{ x }_{ ( j ) } ) }{ \sum_{ l \in R( t_{ ( j ) } ) } \exp ( \pmb{ \beta }'\pmb{ x }_l ) }, \]
+		where $\pmb{ \beta }$ is the vector of coefficients, $\pmb{ x }_{ ( j ) }$ is the vector of covariates for the individual who dies at time $t_{ ( j ) }$ and $R( t_{ ( j ) } )$ is the set of individuals at risk at $t_{ ( j ) }$.
 		
 		The Newton-Raphson procedure is used for maximizing the $\log$ transformed partial likelihood function.
 	\end{frame}
@@ -516,7 +516,7 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 		There are several types of residuals used for checking the model assumptions.
 		\begin{itemize}
 			\item Cox-Snell residuals:
-			\[ r_{ Ci } = \exp( \hat{ \boldsymbol{ \beta } }'\boldsymbol{ x }_i ) \hat{ H }_0( t_i ), \]
+			\[ r_{ Ci } = \exp( \hat{ \pmb{ \beta } }'\pmb{ x }_i ) \hat{ H }_0( t_i ), \]
 			where $\hat{ H }_0( t_i )$ is an estimate of the baseline cumulative hazard function at $t_i$. When an appropriate model is fitted, the Cox-Snell residuals follows an exponential distribution with unity mean.
 		\end{itemize}
 	\end{frame}
@@ -539,6 +539,78 @@ Score (logrank) test = 31.06  on 4 df,   p=3e-06
 			\[ r_{ Di } = \text{sgn}( r_{ Mi } )[ -2 \{ r_{ Mi } + \delta_i \log( \delta_i - r_{ Mi } ) \} ] ^ \frac{ 1 }{ 2 }, \]
 			where the function $\text{sgn}( \cdot )$ is the sign function. Deviance residuals are also used for checking linearity assumption.
 		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression}
+		Consider $m$ response variables $Y_1, Y_2, \dots, Y_m$ and a single set of explanatory variables $z_1, z_2, \dots, z_r$. Suppose each response variable has its own regression model, then 
+		\begin{align*}
+			Y_1 & = \beta_{ 01 } + \beta_{ 11 } z_{ 1 } + \dots + \beta_{ r1 } z_r + \epsilon_1 \\
+			Y_2 & = \beta_{ 02 } + \beta_{ 12 } z_{ 1 } + \dots + \beta_{ r2 } z_r + \epsilon_2 \\
+			\vdots & \qquad \qquad \vdots \\
+			Y_m & = \beta_{ 0m } + \beta_{ 1m } z_{ 1 } + \dots + \beta_{ rm } z_r + \epsilon_m. \\
+		\end{align*}
+		The error term $\pmb{ \epsilon }' = [ \epsilon_1, \epsilon_2, \dots, \epsilon_m ]$ has $E( \pmb{ \epsilon } ) = \pmb{ 0 }$ and $\text{var}( \pmb{ \epsilon } ) = \pmb{ \Sigma }$. Therefore, the error term of the same subject may be correlated.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		Let $[ z_{ j0 }, z_{ j1 }, \dots, z_{ jr } ]$ denote the values of the explanatory variables for the $j$th trail, let $\pmb{Y}'_j = [ Y_{ j1 }, Y_{ j2 }, \dots, Y_{ jm } ]$ be the response variables, and let $\pmb{\epsilon}'_j = [ \epsilon_{ j1 }, \epsilon_{ j2 }, \dots, \epsilon_{ jm } ]$ be the errors. Then introduce the matrix notations.
+		\[ \underset{ n \times ( r + 1 ) }{ \pmb{ Z } } = \begin{bmatrix}
+			z_{ 10 } & z_{ 11 } & \dots & z_{ 1r } \\
+			z_{ 20 } & z_{ 21 } & \dots & z_{ 2r } \\
+			\vdots   & \vdots  & \ddots & \vdots \\
+			z_{ n0 } & z_{ n1 } & \dots & z_{ nr } \\
+		\end{bmatrix}\]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		\[ \underset{ n \times m }{ \pmb{ Y } } = \begin{bmatrix}
+			Y_{ 11 } & Y_{ 12 } & \dots & Y_{ 1m } \\
+			Y_{ 21 } & Y_{ 22 } & \dots & Y_{ 2m } \\
+			\vdots   & \vdots  & \ddots & \vdots \\
+			Y_{ n1 } & Y_{ n2} & \dots & Y_{ nm } \\
+		\end{bmatrix} = [ \pmb{Y}_{ ( 1 ) }, \pmb{Y}_{ ( 2 ) }, \dots, \pmb{Y}_{ ( m ) } ]\]
+		\[ \underset{ ( r + 1 ) \times m }{ \pmb{ \beta } } = \begin{bmatrix}
+			\beta_{ 01 } & \beta_{ 02 } & \dots & \beta_{ 0m } \\
+			\beta_{ 11 } & \beta_{ 12 } & \dots & \beta_{ 1m } \\
+			\vdots   & \vdots  & \ddots & \vdots \\
+			\beta_{ r1 } & \beta_{ r2 } & \dots & \beta_{ rm } \\
+		\end{bmatrix} = [ \pmb{ \beta }_{ ( 1 ) }, \pmb{ \beta }_{ ( 2 ) }, \dots, \pmb{ \beta }_{ ( m ) } ] \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		\[ \underset{ n \times m }{ \pmb{ Y } } = \begin{bmatrix}
+			Y_{ 11 } & Y_{ 12 } & \dots & Y_{ 1m } \\
+			Y_{ 21 } & Y_{ 22 } & \dots & Y_{ 2m } \\
+			\vdots   & \vdots  & \ddots & \vdots \\
+			Y_{ n1 } & Y_{ n2} & \dots & Y_{ nm } \\
+		\end{bmatrix} = [ \pmb{Y}_{ ( 1 ) }, \pmb{Y}_{ ( 2 ) }, \dots, \pmb{Y}_{ ( m ) } ]\]
+		\[ \underset{ ( r + 1 ) \times m }{ \pmb{ \beta } } = \begin{bmatrix}
+			\beta_{ 01 } & \beta_{ 02 } & \dots & \beta_{ 0m } \\
+			\beta_{ 11 } & \beta_{ 12 } & \dots & \beta_{ 1m } \\
+			\vdots   & \vdots  & \ddots & \vdots \\
+			\beta_{ r1 } & \beta_{ r2 } & \dots & \beta_{ rm } \\
+		\end{bmatrix} = [ \pmb{ \beta }_{ ( 1 ) }, \pmb{ \beta }_{ ( 2 ) }, \dots, \pmb{ \beta }_{ ( m ) } ] \]
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Multivariate multiple regression (cont.)}
+		\[ \underset{ n \times m }{ \pmb{ \epsilon } } = \begin{bmatrix}
+			\epsilon_{ 11 } & \epsilon_{ 12 } & \dots & \epsilon_{ 1m } \\
+			\epsilon_{ 21 } & \epsilon_{ 22 } & \dots & \epsilon_{ 2m } \\
+			\vdots   & \vdots  & \ddots & \vdots \\
+			\epsilon_{ n1 } & \epsilon_{ n2} & \dots & \epsilon_{ nm } \\
+		\end{bmatrix} = [ \pmb{\epsilon}_{ ( 1 ) }, \pmb{\epsilon}_{ ( 2 ) }, \dots, \pmb{\epsilon}_{ ( m ) } ] = \begin{bmatrix}
+		\pmb{ \epsilon_1'} \\
+		\pmb{ \epsilon_2'} \\
+		\vdots \\
+		\pmb{ \epsilon_n'}
+	\end{bmatrix} \]
+	The multivariate linear regression model is 
+	\[ \underset{ n \times m }{ \pmb{ Y } } = \underset{ n \times ( r + 1 ) }{ \pmb{ Z } } \underset{ ( r + 1 ) \times m }{ \pmb{ \beta } } + \underset{ n \times m }{ \pmb{ \epsilon } } \]
 	\end{frame}
 
 	\begin{frame}[allowframebreaks]
